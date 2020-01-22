@@ -21,18 +21,18 @@ public class UserController {
     @Autowired
     UserMapper userMapper;
 
-    @GetMapping(value = "getUsers")
+    @GetMapping
     public List<UserDto> getUsers(){
         return userMapper.mapToUserDtoList(dbUserService.getAllUsers());
     }
 
-    @PostMapping(value = "addUser",consumes = APPLICATION_JSON_VALUE)
+    @PostMapping
     public void addUser(@RequestBody UserDto userDto){
         userDto.setCreated(LocalDate.now());
         dbUserService.saveUser(userMapper.mapToUser(userDto));
     }
 
-    @DeleteMapping(value = "deleteUser",consumes = APPLICATION_JSON_VALUE)
+    @DeleteMapping
     public void deleteTitle(@RequestParam long userId){
         dbUserService.deleteUser(userId);
     }

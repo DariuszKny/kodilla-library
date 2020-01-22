@@ -1,6 +1,7 @@
 package com.kodillalibrary.controller;
 
 import com.kodillalibrary.domain.*;
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.mapper.RentMapper;
 import com.kodillalibrary.repository.BookCopyRepository;
 import com.kodillalibrary.repository.RentRepository;
@@ -52,7 +53,7 @@ public class RentControllerTest {
     }
 
     @Test
-    public void ShouldAddRent() throws UserNotFoundExcepion  {
+    public void ShouldAddRent() throws UserNotFoundException {
         //Given
       User user =  userRepository.save(new User(1L,"TestName","ss", LocalDate.now(),new ArrayList<>()));
       Title title = titleRepository.save(new Title(1L,"TestName","TEstAuthor",1000,new ArrayList<>()));
@@ -67,7 +68,7 @@ public class RentControllerTest {
     }
 
     @Test
-    public void ShouldAddDateOfBackAndChangeStatusOfBookCopy() throws UserNotFoundExcepion {
+    public void ShouldAddDateOfBackAndChangeStatusOfBookCopy() throws UserNotFoundException {
         User user =  userRepository.save(new User(1L,"TestName","ss", LocalDate.now(),new ArrayList<>()));
         Title title = titleRepository.save(new Title(1L,"TestName","TEstAuthor",1000,new ArrayList<>()));
         BookCopy bookCopy = bookCopyRepository.save(new BookCopy(1L,title,"Available"));

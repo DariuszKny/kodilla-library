@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class RentDto {
     private Long id;
     private User user;
-    private BookCopy bookCopy;
+    private BookCopyDto bookCopy;
     private LocalDate rented;
     private LocalDate gotBack;
 }

@@ -1,6 +1,6 @@
 package com.kodillalibrary.service;
 
-import com.kodillalibrary.controller.UserNotFoundExcepion;
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.domain.Title;
 import com.kodillalibrary.repository.TitleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class DbTitleService {
         return titleRepository.findAll();
     }
 
-    public Title getTitleById(final Long aLong) throws UserNotFoundExcepion {
-        return titleRepository.findById(aLong).orElseThrow(() -> new UserNotFoundExcepion());
+    public Title getTitleById(final Long aLong) throws UserNotFoundException {
+        return titleRepository.findById(aLong).orElseThrow(() -> new UserNotFoundException());
     }
 
     public Title saveTitle(final Title title){

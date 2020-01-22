@@ -15,11 +15,11 @@ public class BookCopy {
     private Long id;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "title_id", referencedColumnName = "id")
     @NonNull
     private Title title;
 
     @Column(name = "status")
     @NonNull
-    private String status;
+    private BookCopyStatus status;
 }

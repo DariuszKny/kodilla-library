@@ -2,6 +2,7 @@ package com.kodillalibrary.controller;
 
 import com.kodillalibrary.domain.User;
 import com.kodillalibrary.domain.UserDto;
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.mapper.UserMapper;
 import com.kodillalibrary.repository.UserRepository;
 import org.junit.Assert;
@@ -40,7 +41,7 @@ public class UserControllerTest {
         Assert.assertEquals(0,users.size());
     }
     @Test
-    public void addUser() throws UserNotFoundExcepion {
+    public void addUser() throws UserNotFoundException {
         //Given
         UserDto userDto = new UserDto(1L,"Dariusz","Knysak", LocalDate.now(),new ArrayList<>());
         //When

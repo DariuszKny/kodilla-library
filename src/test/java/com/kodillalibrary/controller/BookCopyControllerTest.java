@@ -3,6 +3,7 @@ package com.kodillalibrary.controller;
 import com.kodillalibrary.domain.BookCopy;
 import com.kodillalibrary.domain.BookCopyDto;
 import com.kodillalibrary.domain.Title;
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.mapper.BookCopyMapper;
 import com.kodillalibrary.mapper.TitleMapper;
 import com.kodillalibrary.repository.BookCopyRepository;
@@ -40,11 +41,11 @@ public class BookCopyControllerTest {
     private TitleMapper titleMapper;
 
     @Test
-    public void ShouldAddBookCopy()  throws UserNotFoundExcepion {
+    public void ShouldAddBookCopy()  throws UserNotFoundException {
         //Given
         Title title = new Title(2L,"TestName","TEstAuthor",1000,new ArrayList<>());
         titleRepository.save(title);
-        Title title2 = titleRepository.findById(2L).orElseThrow(() -> new UserNotFoundExcepion());
+        Title title2 = titleRepository.findById(2L).orElseThrow(() -> new UserNotFoundException());
         BookCopy bookCopy = new BookCopy(1L,title2, "Available");
         bookCopyRepository.save(bookCopy);
         //When
@@ -71,7 +72,7 @@ public class BookCopyControllerTest {
     }
 
     @Test
-    public void ShouldChangeStatus() throws UserNotFoundExcepion {
+    public void ShouldChangeStatus() throws UserNotFoundException {
         //Given
         BookCopyDto bookCopyDto = new BookCopyDto(1L,new Title(),"Available");
         BookCopy bookCopy = bookCopyRepository.save(bookCopyMapper.mapToBookCopy(bookCopyDto));

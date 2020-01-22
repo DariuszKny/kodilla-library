@@ -28,6 +28,7 @@ public class Rent {
 
     @Column(name = "rented")
     private LocalDate rented;
-    @Column(name = "gotBack")
-    private LocalDate gotBack;
+
+    @Column(name = "return_date")
+    private LocalDate returnDate;
 }

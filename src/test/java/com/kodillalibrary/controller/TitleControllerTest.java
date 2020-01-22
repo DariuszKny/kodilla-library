@@ -2,6 +2,7 @@ package com.kodillalibrary.controller;
 
 import com.kodillalibrary.domain.Title;
 import com.kodillalibrary.domain.TitleDto;
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.mapper.TitleMapper;
 import com.kodillalibrary.repository.TitleRepository;
 import org.junit.Assert;
@@ -41,7 +42,7 @@ public class TitleControllerTest {
 
     }
     @Test
-    public void shouldAddTitle() throws UserNotFoundExcepion {
+    public void shouldAddTitle() throws UserNotFoundException {
         //Given
         TitleDto titleDto = new TitleDto(1L,"TestName","TEstAuthor",1000,new ArrayList<>());
         //When

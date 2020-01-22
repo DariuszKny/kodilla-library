@@ -2,13 +2,17 @@ package com.kodillalibrary.mapper;
 
 import com.kodillalibrary.domain.User;
 import com.kodillalibrary.domain.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class UserMapper {
+
+    private final RentMapper rentMapper;
 
     public User mapToUser(final UserDto userDto){
         return new User(
@@ -16,7 +20,9 @@ public class UserMapper {
                 userDto.getFirstName(),
                 userDto.getLastName(),
                 userDto.getCreated(),
-                userDto.getRents()
+                userDto.getRents().stream()
+                        .map(rentMapper::mapToRent)
+                        .collect(Collectors.toList())
         );
     }
     public UserDto mapToUserDto(final User user){
@@ -25,12 +31,15 @@ public class UserMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getCreated(),
-                user.getRents()
+                user.getRents().stream()
+                        .map(rentMapper::mapToRentDto)
+                        .collect(Collectors.toList())
         );
     }
+
     public List<UserDto> mapToUserDtoList(final List<User> userList){
         return userList.stream()
-                .map(u -> new UserDto(u.getId(),u.getFirstName(),u.getLastName(),u.getCreated(),u.getRents()))
+                .map(this::mapToUserDto)
                 .collect(Collectors.toList());
     }
 
