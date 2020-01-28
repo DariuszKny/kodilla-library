@@ -1,5 +1,6 @@
 package com.kodillalibrary.controller;
 
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.domain.Title;
 import com.kodillalibrary.domain.TitleDto;
 import com.kodillalibrary.mapper.TitleMapper;
@@ -27,10 +28,6 @@ public class TitleControllerTest {
     @Autowired
     private TitleRepository titleRepository;
 
-    @Autowired
-    private TitleMapper titleMapper;
-
-
     @Test
     public void shouldGetEmptyList() {
     //Given
@@ -41,14 +38,13 @@ public class TitleControllerTest {
 
     }
     @Test
-    public void shouldAddTitle() throws UserNotFoundExcepion {
+    public void shouldAddTitle() throws UserNotFoundException {
         //Given
-        TitleDto titleDto = new TitleDto(1L,"TestName","TEstAuthor",1000,new ArrayList<>());
+        Title someTitle = new Title(1L,"TestName","TestAuthor",1000,new ArrayList<>());
         //When
-        titleRepository.save(titleMapper.mapToTitle(titleDto));
+        titleRepository.save(someTitle);
         //Then
-        Long id = titleDto.getId();
-        Optional<Title> user = titleRepository.findById(id) ;
-        Assert.assertTrue(user.isPresent());
+        Optional<Title> title = titleRepository.findById(5L) ;
+        Assert.assertTrue(title.isPresent());
     }
 }

@@ -1,12 +1,11 @@
 package com.kodillalibrary.controller;
 
-import com.kodillalibrary.domain.BookCopy;
-import com.kodillalibrary.domain.BookCopyDto;
-import com.kodillalibrary.domain.Title;
+import com.kodillalibrary.domain.*;
+import com.kodillalibrary.exceptions.TitleNotFoundException;
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.mapper.BookCopyMapper;
-import com.kodillalibrary.mapper.TitleMapper;
 import com.kodillalibrary.repository.BookCopyRepository;
-import com.kodillalibrary.repository.TitleRepository;
+import com.kodillalibrary.service.TitleService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,21 +30,18 @@ public class BookCopyControllerTest {
     private BookCopyRepository bookCopyRepository;
 
     @Autowired
-    private TitleRepository titleRepository;
+    private TitleService titleService;
 
     @Autowired
     private BookCopyMapper bookCopyMapper;
 
-    @Autowired
-    private TitleMapper titleMapper;
-
     @Test
-    public void ShouldAddBookCopy()  throws UserNotFoundExcepion {
+    public void ShouldAddBookCopy()  throws TitleNotFoundException {
         //Given
-        Title title = new Title(2L,"TestName","TEstAuthor",1000,new ArrayList<>());
-        titleRepository.save(title);
-        Title title2 = titleRepository.findById(2L).orElseThrow(() -> new UserNotFoundExcepion());
-        BookCopy bookCopy = new BookCopy(1L,title2, "Available");
+        TitleDto titleDto = new TitleDto(2L,"TestName","TEstAuthor",1000,new ArrayList<>());
+        titleService.saveTitle(titleDto);
+        Title title2 = titleService.getTitleById(2L);
+        BookCopy bookCopy = new BookCopy(1L,title2, BookCopyStatus.AVAILABLE);
         bookCopyRepository.save(bookCopy);
         //When
         //Then
@@ -58,27 +54,27 @@ public class BookCopyControllerTest {
     @Test
     public void ShouldShowHowManyCopies() {
         //Given
-        Title title = new Title(1L,"TestName","TestAuthor",2000,new ArrayList<>());
-        titleRepository.save(title);
-        BookCopyDto bookCopyDto1 = new BookCopyDto(1L,title,"Available");
-        BookCopyDto bookCopyDto2 = new BookCopyDto(2L,title,"Available");
+        TitleDto titleDto = new TitleDto(1L,"TestName","TestAuthor",2000,new ArrayList<>());
+        titleService.saveTitle(titleDto);
+        BookCopyDto bookCopyDto1 = new BookCopyDto(1L,titleDto, BookCopyStatus.AVAILABLE);
+        BookCopyDto bookCopyDto2 = new BookCopyDto(2L,titleDto,BookCopyStatus.AVAILABLE);
         BookCopy bookCopy1 = bookCopyRepository.save(bookCopyMapper.mapToBookCopy(bookCopyDto1));
         BookCopy bookCopy2 = bookCopyRepository.save(bookCopyMapper.mapToBookCopy(bookCopyDto2));
         //When
-        Long copies = bookCopyController.showHowManyCopies(title.getId());
+        Long copies = bookCopyController.showHowManyCopies(titleDto.getId());
         Long along = 2L;
         Assert.assertEquals(along,copies);
     }
 
     @Test
-    public void ShouldChangeStatus() throws UserNotFoundExcepion {
+    public void ShouldChangeStatus() throws UserNotFoundException {
         //Given
-        BookCopyDto bookCopyDto = new BookCopyDto(1L,new Title(),"Available");
+        BookCopyDto bookCopyDto = new BookCopyDto(1L,new TitleDto(), BookCopyStatus.AVAILABLE);
         BookCopy bookCopy = bookCopyRepository.save(bookCopyMapper.mapToBookCopy(bookCopyDto));
         //When
         bookCopyController.changeStatus(bookCopy.getId());
-        String status = bookCopy.getStatus();
+        BookCopyStatus status = bookCopy.getStatus();
         //Then
-        Assert.assertEquals("Rented",status);
+        Assert.assertEquals(BookCopyStatus.RENTED,status);
     }
 }

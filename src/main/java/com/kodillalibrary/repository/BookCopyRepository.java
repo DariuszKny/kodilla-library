@@ -1,6 +1,7 @@
 package com.kodillalibrary.repository;
 
 import com.kodillalibrary.domain.BookCopy;
+import com.kodillalibrary.domain.BookCopyStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
     @Override
     Optional<BookCopy> findById(Long aLong);
 
-    Long countBookCopyByTitle_IdAndAndStatus(Long titleId, String status);
+    Long countBookCopyByTitle_IdAndStatus(Long titleId, BookCopyStatus status);
 
     @Override
     BookCopy save(BookCopy bookCopy);

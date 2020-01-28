@@ -4,8 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "bookCopy")
@@ -15,11 +14,11 @@ public class BookCopy {
     private Long id;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "title_id", referencedColumnName = "id")
     @NonNull
     private Title title;
 
     @Column(name = "status")
     @NonNull
-    private String status;
+    private BookCopyStatus status;
 }

@@ -1,5 +1,6 @@
 package com.kodillalibrary.controller;
 
+import com.kodillalibrary.exceptions.UserNotFoundException;
 import com.kodillalibrary.domain.User;
 import com.kodillalibrary.domain.UserDto;
 import com.kodillalibrary.mapper.UserMapper;
@@ -40,14 +41,14 @@ public class UserControllerTest {
         Assert.assertEquals(0,users.size());
     }
     @Test
-    public void addUser() throws UserNotFoundExcepion {
+    public void addUser() throws UserNotFoundException {
         //Given
-        UserDto userDto = new UserDto(1L,"Dariusz","Knysak", LocalDate.now(),new ArrayList<>());
+        User user = new User(1L,"Dariusz","Knysak", LocalDate.now(),new ArrayList<>());
         //When
-        userRepository.save(userMapper.mapToUser(userDto));
+        userRepository.save(user);
         //Then
-        Long id = userDto.getId();
-        Optional<User> user = userRepository.findById(id) ;
-        Assert.assertTrue(user.isPresent());
+        List<User> users = userRepository.findAll();
+        Optional<User> testUser = userRepository.findById(3L) ;
+        Assert.assertTrue(testUser.isPresent());
     }
 }

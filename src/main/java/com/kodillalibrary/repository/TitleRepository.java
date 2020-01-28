@@ -12,13 +12,13 @@ public interface TitleRepository extends JpaRepository<Title, Long> {
     List<Title> findAll();
 
     @Override
-    Optional<Title> findById(Long aLong);
+    Optional<Title> findById(Long titleId);
 
     @Override
     Title save(Title title);
 
     @Override
-    void deleteById(Long aLong);
+    void deleteById(Long titleId);
 
 
 }

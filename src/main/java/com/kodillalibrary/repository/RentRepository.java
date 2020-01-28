@@ -12,11 +12,11 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
     List<Rent> findAll();
 
     @Override
-    Optional<Rent> findById(Long aLong);
+    Optional<Rent> findById(Long rentId);
 
     @Override
     Rent save(Rent rent);
 
     @Override
-    void deleteById(Long aLong);
+    void deleteById(Long rentId);
 }

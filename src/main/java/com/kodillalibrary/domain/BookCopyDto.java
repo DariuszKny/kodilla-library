@@ -1,17 +1,12 @@
 package com.kodillalibrary.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
+@Data
 @AllArgsConstructor
-@Setter
 @NoArgsConstructor
 public class BookCopyDto {
     private Long id;
-    private Title title;
-    private String status;
-
+    private TitleDto title;
+    private BookCopyStatus status;
 }

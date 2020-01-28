@@ -7,8 +7,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity(name = "rent")
 public class Rent {
 
@@ -26,8 +25,8 @@ public class Rent {
     @NonNull
     private BookCopy bookCopy;
 
-    @Column(name = "rented")
-    private LocalDate rented;
-    @Column(name = "gotBack")
-    private LocalDate gotBack;
+    @Column(name = "rented_date")
+    private LocalDate rentedDate;
+    @Column(name = "return_date")
+    private LocalDate returnDate;
 }
